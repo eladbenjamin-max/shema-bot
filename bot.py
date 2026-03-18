@@ -53,7 +53,6 @@ def split_text(text, max_length=1800):
 
     return parts
 
-
 class PrayerView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
