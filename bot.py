@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 import os
-BOT_TOKEN = os.getenv("MTQ4MzU2MTAwOTE2MjYyMTExOQ.GNopw5.OoiwS5pKKiLUGc_2NlbDK1EUYmXwrKFOZQqyZ4")
+BOT_TOKEN = os.getenv("MTQ4MzU2MTAwOTE2MjYyMTExOQ.GKn7q6.s6Ly7rH9sEFLSxn6yAsChlkGPLYqx7AxIChSS0")
 PRAYER_CHANNEL_ID = 1483564167930712204
 
 SHEMA_TEXT = """שְׁמַע יִשְׂרָאֵל ה׳ אֱלֹקֵינוּ ה׳ אֶחָד.
