@@ -71,7 +71,6 @@ class PrayerView(discord.ui.View):
     for part in parts[1:]:
         await interaction.followup.send(part, ephemeral=True)
 
-
 @bot.event
 async def on_ready():
     bot.add_view(PrayerView())
