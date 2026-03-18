@@ -64,16 +64,12 @@ class PrayerView(discord.ui.View):
         custom_id="shema_button"
     )
     async def send_shema(self, interaction: discord.Interaction, button: discord.ui.Button):
-        channel = bot.get_channel(PRAYER_CHANNEL_ID)
+    parts = split_text(SHEMA_TEXT)
 
-        if not channel:
-            await interaction.response.send_message("לא נמצא הערוץ ❌", ephemeral=True)
-            return
+    await interaction.response.send_message(parts[0], ephemeral=True)
 
-        await interaction.response.send_message("שולח את שמע ישראל... 🙏", ephemeral=True)
-
-        for part in split_text(SHEMA_TEXT):
-            await channel.send(part)
+    for part in parts[1:]:
+        await interaction.followup.send(part, ephemeral=True)
 
 
 @bot.event
