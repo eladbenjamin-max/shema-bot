@@ -62,14 +62,13 @@ class PrayerView(discord.ui.View):
         style=discord.ButtonStyle.primary,
         custom_id="shema_button"
     )
-    async def send_shema(self, interaction: discord.Interaction, button: discord.ui.Button):
+async def send_shema(self, interaction: discord.Interaction, button: discord.ui.Button):
     parts = split_text(SHEMA_TEXT)
 
     await interaction.response.send_message(parts[0], ephemeral=True)
 
     for part in parts[1:]:
         await interaction.followup.send(part, ephemeral=True)
-
 @bot.event
 async def on_ready():
     bot.add_view(PrayerView())
