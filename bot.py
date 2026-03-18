@@ -1,4 +1,7 @@
 import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
 import discord
 from discord.ext import commands
 
@@ -27,7 +30,25 @@ SHEMA_TEXT = """שְׁמַע יִשְׂרָאֵל ה׳ אֱלֹקֵינוּ ה׳
 דַּבֵּר אֶל בְּנֵי יִשְׂרָאֵל וְאָמַרְתָּ אֲלֵהֶם וְעָשׂוּ לָהֶם צִיצִת עַל כַּנְפֵי בִגְדֵיהֶם לְדֹרֹתָם וְנָתְנוּ עַל צִיצִת הַכָּנָף פְּתִיל תְּכֵלֶת.
 וְהָיָה לָכֶם לְצִיצִת וּרְאִיתֶם אֹתוֹ וּזְכַרְתֶּם אֶת כָּל מִצְו‍ֹת ה׳ וַעֲשִׂיתֶם אֹתָם וְלֹא תָתוּרוּ אַחֲרֵי לְבַבְכֶם וְאַחֲרֵי עֵינֵיכֶם אֲשֶׁר אַתֶּם זֹנִים אַחֲרֵיהֶם.
 לְמַעַן תִּזְכְּרוּ וַעֲשִׂיתֶם אֶת כָּל מִצְו‍ֹתָי וִהְיִיתֶם קְדֹשִׁים לֵאלֹקֵיכֶם.
-אֲנִי ה׳ אֱלֹקֵיכֶם אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם לִהְיוֹת לָכֶם לֵאלֹקִים אֲנִי ה׳ אֱלֹקֵיכֶם."""
+אֲנִי ה׳ אֱלֹקֵיכֶם אֲשֶׁר הוֹצֵאתִי אֶתְכֶם מֵאֶרֶץ מִצְרַיִם לִהְיוֹת לָכֶם לֵאלֹקִים אֲנִי ה׳ אֱלֹקֵיכֶם.
+"""
+
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain; charset=utf-8")
+        self.end_headers()
+        self.wfile.write(b"Bot is alive!")
+
+    def log_message(self, format, *args):
+        return
+
+
+def run_web_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), HealthHandler)
+    server.serve_forever()
 
 
 def split_text(text, max_length=1800):
@@ -87,4 +108,5 @@ async def setup_prayer(interaction: discord.Interaction):
     )
 
 
+threading.Thread(target=run_web_server, daemon=True).start()
 bot.run(BOT_TOKEN)
